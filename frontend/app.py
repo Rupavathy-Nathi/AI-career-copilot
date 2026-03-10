@@ -1,20 +1,19 @@
 import streamlit as st
 
+st.set_page_config(page_title="AI Career Copilot", layout="wide")
+
 if "logged_in" not in st.session_state:
     st.session_state.logged_in = False
 
 if "role" not in st.session_state:
     st.session_state.role = None
 
-st.set_page_config(
-    page_title="AI Career Copilot",
-    page_icon="🚀",
-    layout="wide"
-)
-
 st.title("🚀 AI Career Copilot")
 st.caption("AI-powered placement preparation platform")
 
+# -------------------------
+# BEFORE LOGIN
+# -------------------------
 if not st.session_state.logged_in:
 
     page = st.sidebar.selectbox(
@@ -22,8 +21,18 @@ if not st.session_state.logged_in:
         ["Login", "Register"]
     )
 
-else:
+    if page == "Login":
+        from views import login
+        login.show()
 
+    if page == "Register":
+        from views import register
+        register.show()
+
+# -------------------------
+# AFTER LOGIN
+# -------------------------
+else:
     menu = [
         "Dashboard",
         "Resume Analyzer",
@@ -31,12 +40,11 @@ else:
         "Mock Interview",
         "Coding Practice",
         "Career Roadmap",
-        "Voice Interview",
         "Career Chat",
+        "Voice Interview",
         "Profile"
     ]
 
-    # Admin access
     if st.session_state.role == "admin":
         menu.append("Admin Dashboard")
 
@@ -44,50 +52,51 @@ else:
 
     page = st.sidebar.selectbox("Menu", menu)
 
-st.sidebar.markdown("---")
-st.sidebar.caption("Built with FastAPI + Streamlit + AI")
+    st.sidebar.markdown("---")
+    st.sidebar.caption("Built with FastAPI + Streamlit + AI")
 
-if page == "Logout":
+    if page == "Dashboard":
+        from views import dashboard
+        dashboard.show()
 
-    st.session_state.logged_in = False
-    st.session_state.role = None
+    elif page == "Resume Analyzer":
+        from views import resume_analyzer
+        resume_analyzer.show()
 
-    st.success("Logged out successfully")
+    elif page == "JD Analyzer":
+        from views import jd_analyzer
+        jd_analyzer.show()
 
-    st.rerun()
+    elif page == "Mock Interview":
+        from views import mock_interview
+        mock_interview.show()
 
-if page == "Login":
-    import pages.login
+    elif page == "Coding Practice":
+        from views import coding_practice
+        coding_practice.show()
 
-elif page == "Register":
-    import pages.register
+    elif page == "Career Roadmap":
+        from views import career_roadmap
+        career_roadmap.show()
 
-elif page == "Dashboard":
-    import pages.dashboard
+    elif page == "Career Chat":
+        from views import career_chat
+        career_chat.show()
 
-elif page == "Resume Analyzer":
-    import pages.resume_analyzer
+    elif page == "Voice Interview":
+        from views import voice_interview
+        voice_interview.show()
 
-elif page == "JD Analyzer":
-    import pages.jd_analyzer
+    elif page == "Profile":
+        from views import profile
+        profile.show()
 
-elif page == "Mock Interview":
-    import pages.mock_interview
+    elif page == "Admin Dashboard":
+        from views import admin_dashboard
+        admin_dashboard.show()
 
-elif page == "Coding Practice":
-    import pages.coding_practice
-
-elif page == "Career Roadmap":
-    import pages.career_roadmap
-
-elif page == "Voice Interview":
-    import pages.voice_interview
-
-elif page == "Career Chat":
-    import pages.career_chat
-
-elif page == "Profile":
-    import pages.profile
-
-elif page == "Admin Dashboard":
-    import pages.admin_dashboard
+    elif page == "Logout":
+        st.session_state.logged_in = False
+        st.session_state.role = None
+        st.success("Logged out successfully")
+        st.rerun()
