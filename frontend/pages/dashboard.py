@@ -29,20 +29,21 @@ st.divider()
 
 st.subheader("📈 Interview Score Trend")
 
-data = pd.DataFrame({
-    "Interview": [1,2,3,4,5],
-    "Score": [40,55,60,63,65]
-})
-
-fig = px.line(
-    data,
-    x="Interview",
-    y="Score",
-    markers=True,
-    title="Interview Improvement"
-)
-
-st.plotly_chart(fig, use_container_width=True)
+import requests
+try:
+    response = requests.get("http://localhost:8000/interview/stats")
+    if response.status_code == 200 and response.json().get("history"):
+        history = response.json()["history"]
+        df = pd.DataFrame(history)
+        if not df.empty and "date" in df.columns and "score" in df.columns:
+            fig = px.line(df, x="date", y="score", title="Interview Score Trend", markers=True)
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("Not enough data to graph interview trends.")
+    else:
+        st.info("No interview history found.")
+except Exception as e:
+    st.error(f"Failed to fetch interview stats: {e}")
 
 # -----------------------
 # Resume Improvement

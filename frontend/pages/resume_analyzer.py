@@ -1,4 +1,5 @@
 import streamlit as st
+import requests
 
 st.title("📄 Resume Analyzer")
 
@@ -11,6 +12,23 @@ resume = st.file_uploader(
 
 if resume:
     st.success("Resume uploaded successfully!")
+    
+    # We will simulate reading the resume text here
+    resume_text = "Simulated resume text content based on upload."
 
     if st.button("Analyze Resume"):
         st.info("Analyzing resume...")
+
+    if st.button("Improve Resume with AI"):
+
+        response = requests.post(
+            "http://localhost:8000/resume/improve",
+            json={"content": resume_text}
+        )
+
+        st.subheader("AI Improved Resume")
+
+        if response.status_code == 200:
+            st.write(response.json()["improved_resume"])
+        else:
+            st.error("Failed to generate improvements.")
