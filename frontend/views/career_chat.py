@@ -3,7 +3,7 @@ import requests
 
 def show():
     
-    st.title("ðŸ’¬ AI Career Chat")
+    st.title("AI Career Chat")
     
     prompt = st.chat_input("Ask your career question")
     

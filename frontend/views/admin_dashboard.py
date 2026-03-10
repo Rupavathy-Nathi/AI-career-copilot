@@ -4,7 +4,7 @@ import plotly.express as px
 
 def show():
     
-    st.title("ðŸ›  Admin Dashboard")
+    st.title("Admin Dashboard")
     
     st.markdown("Platform analytics and user management")
     
@@ -29,7 +29,7 @@ def show():
     # Skill Gap Statistics
     # ----------------------
     
-    st.subheader("ðŸ“Š Skill Gap Statistics")
+    st.subheader("Skill Gap Statistics")
     
     skill_data = pd.DataFrame({
         "Skill": ["DSA", "System Design", "SQL", "Machine Learning"],
@@ -51,7 +51,7 @@ def show():
     # User Management
     # ----------------------
     
-    st.subheader("ðŸ‘¥ User Management")
+    st.subheader("User Management")
     
     users = pd.DataFrame({
         "User ID": [1,2,3],

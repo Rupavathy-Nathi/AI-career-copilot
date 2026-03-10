@@ -2,7 +2,7 @@
 
 def show():
     
-    st.header("ðŸ“ Register")
+    st.header("Register")
     
     name = st.text_input("Name")
     email = st.text_input("Email")

@@ -2,7 +2,7 @@
 
 def show():
     
-    st.title("ðŸ“‘ Job Description Analyzer")
+    st.title("Job Description Analyzer")
     
     jd = st.text_area(
         "Paste Job Description",

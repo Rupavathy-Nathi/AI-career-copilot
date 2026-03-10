@@ -2,7 +2,7 @@
 
 def show():
     
-    st.title("ðŸ‘¤ Profile")
+    st.title("Profile")
     
     st.write("Name: Student")
     

@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 
 def show():
     
-    st.title("ðŸŽ¤ Mock Interview")
+    st.title("Mock Interview")
     
     question = st.text_area("Interview Question")
     

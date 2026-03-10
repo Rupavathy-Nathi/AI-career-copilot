@@ -2,7 +2,7 @@
 
 def show():
     
-    st.title("ðŸ’» Coding Practice")
+    st.title("Coding Practice")
     
     difficulty = st.selectbox(
         "Select Difficulty",

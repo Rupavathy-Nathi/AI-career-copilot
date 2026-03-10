@@ -5,7 +5,7 @@ import requests
 
 def show():
     
-    st.title("ðŸ“Š Student Dashboard")
+    st.title("Student Dashboard")
     
     st.markdown("Welcome to **AI Career Copilot Analytics**")
     
@@ -16,13 +16,13 @@ def show():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.metric("ðŸ“„ Resume Score", "78", "+5")
+        st.metric("Resume Score", "78", "+5")
     
     with col2:
-        st.metric("ðŸ¤– ATS Score", "72", "+3")
+        st.metric("ATS Score", "72", "+3")
     
     with col3:
-        st.metric("ðŸŽ¤ Interview Score", "65", "+8")
+        st.metric("Interview Score", "65", "+8")
     
     st.divider()
     
@@ -30,7 +30,7 @@ def show():
     # Interview Score Trend
     # -----------------------
     
-    st.subheader("ðŸ“ˆ Interview Score Trend")
+    st.subheader("Interview Score Trend")
     
     try:
         response = requests.get("http://localhost:8000/interview/stats")
@@ -51,7 +51,7 @@ def show():
     # Resume Improvement
     # -----------------------
     
-    st.subheader("ðŸ“Š Resume Improvement")
+    st.subheader("Resume Improvement")
     
     resume_data = pd.DataFrame({
         "Version": ["V1","V2","V3","V4"],
@@ -71,7 +71,7 @@ def show():
     # Coding Practice Progress
     # -----------------------
     
-    st.subheader("ðŸ“‰ Coding Practice Progress")
+    st.subheader("Coding Practice Progress")
     
     coding_data = pd.DataFrame({
         "Day":["Day1","Day2","Day3","Day4","Day5"],

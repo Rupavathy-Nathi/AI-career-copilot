@@ -28,7 +28,12 @@ def login(data: dict):
 
     token = create_access_token({
         "email": user["email"],
-        "role": user["role"]
+        "role": user.get("role", "student")
     })
 
-    return {"access_token": token}
+    return {
+        "access_token": token,
+        "email": user["email"],
+        "role": user.get("role", "student"),
+        "message": "Login successful"
+    }

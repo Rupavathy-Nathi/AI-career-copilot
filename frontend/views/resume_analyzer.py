@@ -3,7 +3,7 @@ import requests
 
 def show():
     
-    st.title("ðŸ“„ Resume Analyzer")
+    st.title("Resume Analyzer")
     
     st.write("Upload your resume to analyze ATS score and improvements.")
     

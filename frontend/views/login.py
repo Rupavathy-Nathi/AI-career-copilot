@@ -23,7 +23,7 @@ def show():
             data = response.json()
     
             st.session_state.logged_in = True
-            st.session_state.role = data["role"]
+            st.session_state.role = data.get("role", "student")
     
             st.success("Login successful")
             st.rerun()

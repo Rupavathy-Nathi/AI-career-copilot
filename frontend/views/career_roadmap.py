@@ -3,7 +3,7 @@ import requests
 
 def show():
     
-    st.title("ðŸ§­ Career Roadmap")
+    st.title("Career Roadmap")
     
     goal = st.text_input(
         "Enter your target role"
@@ -13,7 +13,7 @@ def show():
         st.success("Generating roadmap...")
     
     st.divider()
-    st.subheader("ðŸŽ¯ Job Matching Engine")
+    st.subheader("Job Matching Engine")
     
     skills = st.text_input("Enter your skills separated by comma")
     

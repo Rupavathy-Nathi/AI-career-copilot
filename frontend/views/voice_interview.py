@@ -4,7 +4,7 @@ from streamlit_mic_recorder import mic_recorder
 
 def show():
     
-    st.title("ðŸŽ¤ Voice Mock Interview")
+    st.title("Voice Mock Interview")
     
     audio = mic_recorder(start_prompt="Start Recording")
     
