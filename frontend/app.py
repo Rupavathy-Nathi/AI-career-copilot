@@ -32,4 +32,7 @@ elif selected == "Profile":
     import pages.profile
 
 elif selected == "Admin Dashboard":
-    import pages.admin_dashboard    
+    import pages.admin_dashboard
+
+elif selected == "Voice Interview":
+    import pages.voice_interview

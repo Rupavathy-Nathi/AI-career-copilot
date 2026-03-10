@@ -14,7 +14,8 @@ def sidebar():
                 "Coding Practice",
                 "Career Roadmap",
                 "Profile",
-                "Admin Dashboard"
+                "Admin Dashboard",
+                "Voice Interview"
             ],
             icons=[
                 "speedometer",
@@ -24,7 +25,8 @@ def sidebar():
                 "code",
                 "map",
                 "person",
-                "gear"
+                "gear",
+                "mic-fill"
             ],
             menu_icon="robot",
             default_index=0,

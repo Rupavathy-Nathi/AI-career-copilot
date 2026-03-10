@@ -6,5 +6,4 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Using backend.main:app because main.py is inside the backend/ folder
 CMD ["uvicorn","backend.main:app","--host","0.0.0.0","--port","8000"]
