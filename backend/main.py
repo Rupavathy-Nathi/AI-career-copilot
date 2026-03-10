@@ -7,6 +7,7 @@ from backend.resume_analyzer_routes import router as resume_analyzer_router
 from backend.ats_routes import router as ats_router
 from backend.jd_routes import router as jd_router
 from backend.skill_gap_routes import router as skill_gap_router
+from backend.roadmap_routes import router as roadmap_router
 app = FastAPI()
 
 app.include_router(auth_router)
@@ -17,6 +18,7 @@ app.include_router(resume_analyzer_router)
 app.include_router(ats_router)
 app.include_router(jd_router)
 app.include_router(skill_gap_router)
+app.include_router(roadmap_router)
 
 @app.get("/")
 def home():
