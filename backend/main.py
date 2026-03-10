@@ -1,13 +1,10 @@
 from fastapi import FastAPI
-from backend.database import users_collection
+from backend.auth.routes import router as auth_router
 
 app = FastAPI()
+
+app.include_router(auth_router)
 
 @app.get("/")
 def home():
     return {"message": "AI Career Copilot API Running"}
-
-@app.get("/test-db")
-def test_db():
-    count = users_collection.count_documents({})
-    return {"users_in_db": count}
