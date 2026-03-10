@@ -26,6 +26,9 @@ def login(data: dict):
     if not verify_password(data["password"], user["password"]):
         return {"error": "Invalid password"}
 
-    token = create_access_token({"email": user["email"]})
+    token = create_access_token({
+        "email": user["email"],
+        "role": user["role"]
+    })
 
     return {"access_token": token}
