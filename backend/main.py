@@ -10,6 +10,7 @@ from backend.skill_gap_routes import router as skill_gap_router
 from backend.roadmap_routes import router as roadmap_router
 from backend.interview_routes import router as interview_router
 from backend.interview_evaluation_routes import router as interview_eval_router
+from backend.coding_routes import router as coding_router
 app = FastAPI()
 
 app.include_router(auth_router)
@@ -23,6 +24,7 @@ app.include_router(skill_gap_router)
 app.include_router(roadmap_router)
 app.include_router(interview_router)
 app.include_router(interview_eval_router)
+app.include_router(coding_router)
 @app.get("/")
 def home():
     return {"message": "AI Career Copilot API Running"}
