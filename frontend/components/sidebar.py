@@ -13,7 +13,8 @@ def sidebar():
                 "Mock Interview",
                 "Coding Practice",
                 "Career Roadmap",
-                "Profile"
+                "Profile",
+                "Admin Dashboard"
             ],
             icons=[
                 "speedometer",
@@ -22,10 +23,11 @@ def sidebar():
                 "mic",
                 "code",
                 "map",
-                "person"
+                "person",
+                "gear"
             ],
             menu_icon="robot",
             default_index=0,
         )
-
+        
     return selected

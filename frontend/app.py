@@ -30,3 +30,6 @@ elif selected == "Career Roadmap":
 
 elif selected == "Profile":
     import pages.profile
+
+elif selected == "Admin Dashboard":
+    import pages.admin_dashboard    
