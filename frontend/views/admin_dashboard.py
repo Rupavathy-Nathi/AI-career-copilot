@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 
@@ -12,16 +12,34 @@ def show():
     # Platform Metrics
     # ----------------------
     
+    headers = {}
+    if "access_token" in st.session_state:
+        headers["Authorization"] = f"Bearer {st.session_state.access_token}"
+
+    try:
+        import requests
+        res = requests.get("http://127.0.0.1:8000/admin/stats", headers=headers)
+        if res.status_code == 200:
+            stats = res.json()
+            users_count = stats.get("users", 0)
+            interviews_count = stats.get("interviews", 0)
+        else:
+            users_count = "Error"
+            interviews_count = "Error"
+    except Exception:
+        users_count = "Error"
+        interviews_count = "Error"
+
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.metric("Total Users", "120")
+        st.metric("Total Users", users_count)
     
     with col2:
-        st.metric("Total Interviews", "340")
+        st.metric("Total Interviews", interviews_count)
     
     with col3:
-        st.metric("Average Resume Score", "74")
+        st.metric("Platform Status", "Online" if users_count != "Error" else "Offline")
     
     st.divider()
     

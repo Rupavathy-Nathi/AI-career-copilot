@@ -42,6 +42,7 @@ else:
             "Resume Analyzer",
             "JD Analyzer",
             "Mock Interview",
+            "Interview History",
             "Coding Practice",
             "Career Roadmap",
             "Career Chat",
@@ -51,9 +52,11 @@ else:
         ]
     elif st.session_state.role == "admin":
         menu = [
-            "Admin Dashboard",
+            "Platform Analytics",
             "User Management",
-            "Analytics",
+            "Interview Results",
+            "Resume Scores",
+            "Question Management",
             "Logout"
         ]
     else:
@@ -81,6 +84,10 @@ else:
         from views import mock_interview
         mock_interview.show()
 
+    elif page == "Interview History":
+        from views import interview_history
+        interview_history.show()
+
     elif page == "Coding Practice":
         from views import coding_practice
         coding_practice.show()
@@ -101,7 +108,7 @@ else:
         from views import profile
         profile.show()
 
-    elif page == "Admin Dashboard":
+    elif page == "Platform Analytics":
         from views import admin_dashboard
         admin_dashboard.show()
 
@@ -109,9 +116,17 @@ else:
         st.title("User Management")
         st.info("User Management module coming soon (Placeholder)")
 
-    elif page == "Analytics":
-        st.title("Analytics")
-        st.info("Analytics module coming soon (Placeholder)")
+    elif page == "Interview Results":
+        from views import admin_interviews
+        admin_interviews.show()
+
+    elif page == "Resume Scores":
+        from views import admin_resumes
+        admin_resumes.show()
+
+    elif page == "Question Management":
+        from views import admin_questions
+        admin_questions.show()
 
     elif page == "Logout":
         st.session_state.logged_in = False

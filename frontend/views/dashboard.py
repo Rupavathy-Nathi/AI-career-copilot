@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import plotly.express as px
 import pandas as pd
 import requests
@@ -33,7 +33,7 @@ def show():
     st.subheader("Interview Score Trend")
     
     try:
-        response = requests.get("http://localhost:8000/interview/stats")
+        response = requests.get("http://127.0.0.1:8000/interview/stats")
         if response.status_code == 200 and response.json().get("history"):
             history = response.json()["history"]
             df = pd.DataFrame(history)

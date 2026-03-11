@@ -11,6 +11,21 @@ router = APIRouter(prefix="/interview")
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 
+@router.get("/history")
+def get_interview_history(user=Depends(get_current_user)):
+    from backend.database import interviews_collection
+    email = user.get("email")
+    
+    if not email:
+        return {"history": []}
+        
+    records = list(interviews_collection.find(
+        {"student": email},
+        {"_id": 0}
+    ).sort("date", 1)) # Ascending order for chart chronological plotting
+    
+    return {"history": records}
+
 @router.post("/evaluate")
 def evaluate_answer(data: dict, user=Depends(get_current_user)):
 
@@ -40,6 +55,16 @@ def evaluate_answer(data: dict, user=Depends(get_current_user)):
         )
         import json
         feedback = json.loads(response.choices[0].message.content.strip('` \n'))
+        
+        from backend.database import interviews_collection
+        from datetime import datetime
+        interviews_collection.insert_one({
+            "student": user.get("email", "Unknown"),
+            "question": question,
+            "score": feedback.get("score", 0),
+            "date": datetime.now()
+        })
+        
         return feedback
     except Exception as e:
         # Fallback if AI generation or JSON parsing fails

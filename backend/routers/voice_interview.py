@@ -1,6 +1,9 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, Depends
 from backend.services.speech_service import transcribe_audio
 from backend.services.ai_gateway import ask_ai
+from backend.auth.dependencies import get_current_user
+from backend.database import interviews_collection
+from datetime import datetime
 import shutil
 import json
 
@@ -9,7 +12,8 @@ router = APIRouter()
 @router.post("/voice/interview")
 async def voice_interview(
     audio: UploadFile = File(...),
-    question: str = Form(...)
+    question: str = Form(...),
+    user=Depends(get_current_user)
 ):
 
     file_path = f"temp_{audio.filename}"
@@ -38,6 +42,13 @@ Return ONLY a valid JSON object with the following keys and no extra text, markd
 """
         reply = ask_ai(prompt)
         feedback_data = json.loads(reply.strip('` \n'))
+        
+        interviews_collection.insert_one({
+            "student": user.get("email", "Unknown"),
+            "question": question,
+            "score": feedback_data.get("score", 0),
+            "date": datetime.now()
+        })
         
         return {
             "question": question,
