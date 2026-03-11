@@ -9,5 +9,8 @@ class ChatRequest(BaseModel):
 
 @router.post("/chat")
 def chat(data: ChatRequest):
-    reply = ask_ai(data.message)
-    return {"reply": reply}
+    try:
+        reply = ask_ai(data.message)
+        return {"reply": reply}
+    except Exception as e:
+        return {"error": f"AI Chat failed: {str(e)}"}

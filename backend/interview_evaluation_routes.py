@@ -14,20 +14,21 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 @router.post("/evaluate")
 def evaluate_answer(data: dict, user=Depends(get_current_user)):
 
-    question = data["question"]
-    answer = data["answer"]
+    question = data.get("question", "")
+    answer = data.get("answer", "")
 
     prompt = f"""
-    Evaluate this interview answer.
+    Evaluate this interview answer and give score:
 
     Question: {question}
     Answer: {answer}
 
-    Provide:
-    1. Technical knowledge score (0-10)
-    2. Communication score (0-10)
-    3. Confidence score (0-10)
-    4. Feedback for improvement
+    Return ONLY a valid JSON object with the following keys and no extra text, markdown formatting or backticks at all:
+    "score" (integer 0-100),
+    "communication" (integer 0-100),
+    "technical_depth" (integer 0-100),
+    "confidence" (integer 0-100),
+    "suggestion" (string).
     """
 
     try:
@@ -37,6 +38,16 @@ def evaluate_answer(data: dict, user=Depends(get_current_user)):
                 {"role": "user", "content": prompt}
             ]
         )
-        return {"evaluation": response.choices[0].message.content}
+        import json
+        feedback = json.loads(response.choices[0].message.content.strip('` \n'))
+        return feedback
     except Exception as e:
-        return {"error": f"AI Evaluation failed: {str(e)}"}
+        # Fallback if AI generation or JSON parsing fails
+        score = min(len(answer) // 5, 100) if isinstance(answer, str) else 50
+        return {
+            "score": score,
+            "communication": 75,
+            "technical_depth": 70,
+            "confidence": 72,
+            "suggestion": f"Fallback Response: Explain your approach more clearly and include examples. (Error: {str(e)})"
+        }

@@ -14,8 +14,8 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 @router.post("/generate")
 def generate_roadmap(data: dict, user=Depends(get_current_user)):
 
-    missing_skills = data["missing_skills"]
-    target_role = data["target_role"]
+    missing_skills = data.get("missing_skills", "")
+    target_role = data.get("target_role", "")
 
     prompt = f"""
     A student wants to become a {target_role}.

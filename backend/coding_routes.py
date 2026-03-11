@@ -14,8 +14,8 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 @router.post("/generate")
 def generate_question(data: dict, user=Depends(get_current_user)):
 
-    topic = data["topic"]
-    difficulty = data["difficulty"]
+    topic = data.get("topic", "")
+    difficulty = data.get("difficulty", "")
 
     prompt = f"""
     Generate a coding interview problem.

@@ -11,6 +11,9 @@ if "role" not in st.session_state:
 st.title("🚀 AI Career Copilot")
 st.caption("AI-powered placement preparation platform")
 
+if st.session_state.logged_in:
+    st.sidebar.success(f"Logged in as {st.session_state.role}")
+
 # -------------------------
 # BEFORE LOGIN
 # -------------------------
@@ -33,22 +36,29 @@ if not st.session_state.logged_in:
 # AFTER LOGIN
 # -------------------------
 else:
-    menu = [
-        "Dashboard",
-        "Resume Analyzer",
-        "JD Analyzer",
-        "Mock Interview",
-        "Coding Practice",
-        "Career Roadmap",
-        "Career Chat",
-        "Voice Interview",
-        "Profile"
-    ]
-
-    if st.session_state.role == "admin":
-        menu.append("Admin Dashboard")
-
-    menu.append("Logout")
+    if st.session_state.role == "student":
+        menu = [
+            "Dashboard",
+            "Resume Analyzer",
+            "JD Analyzer",
+            "Mock Interview",
+            "Coding Practice",
+            "Career Roadmap",
+            "Career Chat",
+            "Voice Interview",
+            "Profile",
+            "Logout"
+        ]
+    elif st.session_state.role == "admin":
+        menu = [
+            "Admin Dashboard",
+            "User Management",
+            "Analytics",
+            "Logout"
+        ]
+    else:
+        # Fallback if role is undefined or not standard
+        menu = ["Dashboard", "Logout"]
 
     page = st.sidebar.selectbox("Menu", menu)
 
@@ -94,6 +104,14 @@ else:
     elif page == "Admin Dashboard":
         from views import admin_dashboard
         admin_dashboard.show()
+
+    elif page == "User Management":
+        st.title("User Management")
+        st.info("User Management module coming soon (Placeholder)")
+
+    elif page == "Analytics":
+        st.title("Analytics")
+        st.info("Analytics module coming soon (Placeholder)")
 
     elif page == "Logout":
         st.session_state.logged_in = False

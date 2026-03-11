@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import requests
 
 def show():
@@ -11,7 +11,7 @@ def show():
     if st.button("Login"):
     
         response = requests.post(
-            "http://localhost:8000/login",
+            "http://127.0.0.1:8000/login",
             json={
                 "email": email,
                 "password": password
@@ -24,6 +24,7 @@ def show():
     
             st.session_state.logged_in = True
             st.session_state.role = data.get("role", "student")
+            st.session_state.access_token = data.get("access_token")
     
             st.success("Login successful")
             st.rerun()

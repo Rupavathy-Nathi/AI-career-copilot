@@ -1,4 +1,4 @@
-﻿import streamlit as st
+import streamlit as st
 import requests
 import plotly.graph_objects as go
 
@@ -12,36 +12,42 @@ def show():
     
     if st.button("Evaluate Answer"):
     
+        headers = {}
+        if "access_token" in st.session_state:
+            headers["Authorization"] = f"Bearer {st.session_state.access_token}"
+
         response = requests.post(
-            "http://localhost:8000/interview/evaluate",
+            "http://127.0.0.1:8000/interview/evaluate",
             json={
                 "question": question,
                 "answer": answer
-            }
+            },
+            headers=headers
         )
     
         data = response.json()
     
-        st.success(f"Overall Score: {data['score']}/100")
+        score = data.get("score", "Not available")
+        st.success(f"Overall Score: {score}/100")
     
         col1, col2, col3 = st.columns(3)
     
-        col1.metric("Communication", data["communication"])
-        col2.metric("Technical Depth", data["technical_depth"])
-        col3.metric("Confidence", data["confidence"])
+        col1.metric("Communication", data.get("communication", 0))
+        col2.metric("Technical Depth", data.get("technical_depth", 0))
+        col3.metric("Confidence", data.get("confidence", 0))
     
         st.subheader("AI Suggestion")
     
-        st.info(data["suggestion"])
+        st.info(data.get("suggestion", "No suggestion available."))
     
         fig = go.Figure()
     
         fig.add_trace(go.Bar(
             x=["Communication", "Technical Depth", "Confidence"],
             y=[
-                data["communication"],
-                data["technical_depth"],
-                data["confidence"]
+                data.get("communication", 0),
+                data.get("technical_depth", 0),
+                data.get("confidence", 0)
             ]
         ))
     

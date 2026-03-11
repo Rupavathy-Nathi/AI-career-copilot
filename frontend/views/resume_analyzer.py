@@ -1,5 +1,26 @@
-﻿import streamlit as st
+import streamlit as st
 import requests
+
+import PyPDF2
+import docx
+import io
+
+def extract_text(file):
+    text = ""
+    if file.name.endswith(".pdf"):
+        reader = PyPDF2.PdfReader(file)
+        for page in reader.pages:
+            text += page.extract_text() + "\n"
+    elif file.name.endswith(".docx"):
+        doc = docx.Document(file)
+        text = "\n".join([para.text for para in doc.paragraphs])
+    else:
+        # Fallback for plain text
+        try:
+            text = file.getvalue().decode("utf-8")
+        except:
+            text = "Unsupported file format or decoding error."
+    return text
 
 def show():
     
@@ -9,14 +30,14 @@ def show():
     
     resume = st.file_uploader(
         "Upload Resume",
-        type=["pdf","docx"]
+        type=["pdf","docx","txt"]
     )
     
     if resume:
         st.success("Resume uploaded successfully!")
         
-        # We will simulate reading the resume text here
-        resume_text = "Simulated resume text content based on upload."
+        # Read the real uploaded file text
+        resume_text = extract_text(resume)
     
         if st.button("Analyze Resume"):
             st.info("Analyzing resume...")
@@ -24,7 +45,7 @@ def show():
         if st.button("Improve Resume with AI"):
     
             response = requests.post(
-                "http://localhost:8000/resume/improve",
+                "http://127.0.0.1:8000/resume/improve",
                 json={"content": resume_text}
             )
     

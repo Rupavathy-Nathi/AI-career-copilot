@@ -1,8 +1,12 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
-MONGO_URL = "mongodb+srv://career_admin:strongpassword123@cluster0.4xf5le3.mongodb.net/?appName=Cluster0"
+load_dotenv()
 
-client = MongoClient(MONGO_URL)
+MONGO_URI = os.getenv("MONGO_URI") or os.getenv("MONGO_URL")
+
+client = MongoClient(MONGO_URI)
 
 db = client["career_copilot_db"]
 

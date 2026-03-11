@@ -12,16 +12,25 @@ from backend.interview_routes import router as interview_router
 from backend.interview_evaluation_routes import router as interview_eval_router
 from backend.coding_routes import router as coding_router
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from backend.utils.logger import get_logger
 from backend.routers import voice_interview
-from backend.routers import interview
 from backend.routers import resume_improve
 from backend.routers import interview_stats
 from backend.routers import job_match
 from backend.routers import chat
 app = FastAPI()
 logger = get_logger()
+
+# Configure CORS for Streamlit
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth_router)
 app.include_router(student_router)
@@ -36,12 +45,10 @@ app.include_router(interview_router)
 app.include_router(interview_eval_router)
 app.include_router(coding_router)
 app.include_router(voice_interview.router)
-app.include_router(interview.router)
 app.include_router(resume_improve.router)
 app.include_router(interview_stats.router)
 app.include_router(job_match.router)
 app.include_router(chat.router)
-logger = get_logger()
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
